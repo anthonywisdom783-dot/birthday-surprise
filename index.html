@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#170f26">
+  <meta name="description" content="A birthday surprise made with love.">
+  <title>For You, My Lovely Mama ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #170f26;
+      --surface: #241735;
+      --surface-light: #352149;
+      --text: #f8eee4;
+      --muted: #bba99a;
+      --accent: #e9a783;
+      --accent-light: #f5c6a8;
+      --line: rgba(245, 198, 168, .16);
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", system-ui, sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.65;
+    }
+
+    body.locked {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .serif {
+      font-family: var(--serif);
+    }
+
+    .eyebrow {
+      margin: 0 0 .8rem;
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .cover {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: auto;
+      padding: 1.5rem;
+      background:
+        radial-gradient(ellipse at 50% 20%, rgba(147, 91, 190, .28), transparent 48%),
+        linear-gradient(160deg, #2b1940, #170f26 72%);
+      text-align: center;
+      transition: opacity .7s ease, visibility .7s ease;
+    }
+
+    .cover.is-hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cover-content {
+      width: min(100%, 760px);
+      animation: rise .9s both;
+    }
+
+    .cover h1 {
+      margin: .5rem 0 2rem;
+      color: var(--text);
+      font: 500 clamp(2.6rem, 9vw, 5.8rem)/1.08 var(--serif);
+    }
+
+    .cover h1 em {
+      color: var(--accent-light);
+      font-weight: 500;
+    }
+
+    .cover-button {
+      border: 1px solid rgba(245, 198, 168, .4);
+      border-radius: 999px;
+      padding: .9rem 1.4rem;
+      background: var(--accent);
+      color: #271912;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .cover-button:hover {
+      transform: translateY(-2px);
+      background: var(--accent-light);
+    }
+
+    /* Password gate */
+    .gate {
+      position: fixed;
+      z-index: 10;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: auto;
+      padding: 1.5rem;
+      background:
+        radial-gradient(ellipse at 50% 15%, rgba(119, 68, 158, .28), transparent 45%),
+        var(--bg);
+      transition: opacity .65s ease, visibility .65s ease;
+    }
+
+    .gate.is-hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gate-card {
+      width: min(100%, 430px);
+      text-align: center;
+      animation: rise .8s both;
+    }
+
+    .gate-heart {
+      color: var(--accent);
+      font-size: 2rem;
+    }
+
+    .gate h1 {
+      margin: .35rem 0 .8rem;
+      font: 500 clamp(2.5rem, 11vw, 4rem)/1.05 var(--serif);
+    }
+
+    .gate-copy {
+      margin: 0 auto 1.8rem;
+      max-width: 32ch;
+      color: var(--muted);
+    }
+
+    .password-form {
+      display: flex;
+      gap: .65rem;
+    }
+
+    .password-form input {
+      min-width: 0;
+      flex: 1;
+      padding: .9rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      outline: none;
+      background: rgba(255, 255, 255, .04);
+      color: var(--text);
+    }
+
+    .password-form input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(233, 167, 131, .12);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      border: 0;
+      border-radius: 999px;
+      padding: .9rem 1.25rem;
+      background: var(--accent);
+      color: #271912;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--accent-light);
+    }
+
+    .gate-error {
+      min-height: 1.5rem;
+      margin: .75rem 0 0;
+      color: #ffb2a4;
+      font-size: .88rem;
+    }
+
+    /* Page layout */
+    .site-header {
+      position: absolute;
+      z-index: 2;
+      inset: 0 0 auto;
+      padding: 1.1rem 1.3rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: min(100%, 1120px);
+      margin: auto;
+    }
+
+    .brand {
+      color: var(--accent-light);
+      font: italic 1.25rem var(--serif);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 1.4rem;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-light);
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: 710px;
+      min-height: min(900px, 100svh);
+      place-items: center;
+      overflow: hidden;
+      padding: 7rem 1.25rem 5rem;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 42%, rgba(126, 77, 170, .3), transparent 48%),
+        linear-gradient(180deg, rgba(23, 15, 38, .05), var(--bg));
+    }
+
+    .hero::before,
+    .hero::after {
+      position: absolute;
+      content: "";
+      width: 240px;
+      aspect-ratio: 1;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      animation: breathe 6s ease-in-out infinite;
+    }
+
+    .hero::before {
+      width: min(70vw, 540px);
+    }
+
+    .hero::after {
+      width: min(52vw, 400px);
+      animation-delay: -3s;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 750px;
+    }
+
+    .hero h1 {
+      margin: .25rem 0 1rem;
+      font: 500 clamp(3.25rem, 13vw, 7.4rem)/.98 var(--serif);
+      letter-spacing: -.045em;
+    }
+
+    .hero h1 em {
+      color: var(--accent-light);
+      font-weight: 500;
+    }
+
+    .hero-subtitle {
+      max-width: 38ch;
+      margin: 0 auto 2rem;
+      color: var(--muted);
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+    }
+
+    .countdown-label {
+      margin: 0 0 .7rem;
+      color: var(--accent);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(.5rem, 3vw, 1.5rem);
+    }
+
+    .time-unit {
+      min-width: 62px;
+    }
+
+    .time-unit strong {
+      display: block;
+      font: 500 clamp(1.8rem, 7vw, 3.2rem)/1.1 var(--serif);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .time-unit span {
+      color: var(--muted);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 1.6rem;
+      color: var(--muted);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .scroll-cue span {
+      display: block;
+      margin-top: .3rem;
+      color: var(--accent);
+      font-size: 1.15rem;
+    }
+
+    .section {
+      width: min(100% - 2.5rem, 1080px);
+      margin: auto;
+      padding: 5rem 0;
+    }
+
+    .section-heading {
+      margin-bottom: 2rem;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font: 500 clamp(2.2rem, 7vw, 3.6rem)/1.1 var(--serif);
+      letter-spacing: -.025em;
+    }
+
+    .section-heading p:not(.eyebrow) {
+      margin: .75rem 0 0;
+      color: var(--muted);
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .75rem;
+    }
+
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
+      aspect-ratio: 1 / 1.15;
+      border-radius: 10px;
+      background: var(--surface-light);
+    }
+
+    .photo-card:nth-child(3n + 1) {
+      aspect-ratio: 1 / 1.25;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: .88;
+      transition: transform .55s cubic-bezier(.2, .7, .2, 1), opacity .35s;
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+
+    .photo-card figcaption {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 2.5rem .85rem .8rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, .72));
+      color: white;
+      font: italic 1rem var(--serif);
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    /* Video and letter */
+    .video-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .video-card+.video-card {
+      margin-top: 1rem;
+    }
+
+    .video-card video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #100b18;
+      object-fit: cover;
+    }
+
+    .video-caption {
+      padding: 1rem 1.1rem;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .letter-wrap {
+      position: relative;
+      padding: clamp(1.5rem, 6vw, 3.8rem);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .045), transparent 55%), var(--surface);
+    }
+
+    .letter-wrap::before {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.4rem;
+      color: rgba(233, 167, 131, .24);
+      content: "♥";
+      font-size: 2rem;
+    }
+
+    .letter {
+      max-width: 66ch;
+      color: #e8dbcf;
+      font: 500 clamp(1.05rem, 2.7vw, 1.25rem)/1.95 var(--serif);
+    }
+
+    .letter p {
+      margin: 0 0 1.15rem;
+    }
+
+    .letter p:last-child {
+      margin-bottom: 0;
+    }
+
+    .signature {
+      margin-top: 1.5rem;
+      color: var(--accent-light);
+      font: italic 1.5rem var(--serif);
+    }
+
+    footer {
+      padding: 1.6rem;
+      border-top: 1px solid var(--line);
+      color: #8f7e72;
+      text-align: center;
+      font-size: .8rem;
+    }
+
+    footer span {
+      color: var(--accent);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+        transform: scale(.97);
+        opacity: .45;
+      }
+
+      50% {
+        transform: scale(1.03);
+        opacity: .9;
+      }
+    }
+
+    @media (min-width: 680px) {
+      .site-header {
+        padding: 1.5rem 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+
+      .section {
+        padding: 6.5rem 0;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .photo-card {
+        aspect-ratio: 1 / 1.05;
+      }
+
+      .photo-card:nth-child(3n + 1) {
+        aspect-ratio: 1 / 1.05;
+      }
+
+      .photo-card:nth-child(2),
+      .photo-card:nth-child(5) {
+        transform: translateY(1.5rem);
+      }
+
+      .video-card {
+        max-width: 800px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .password-form {
+        flex-direction: column;
+      }
+
+      .password-form .button {
+        width: 100%;
+      }
+
+      .time-unit {
+        min-width: 54px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="locked">
+  <section class="cover" id="coverScreen" aria-labelledby="coverTitle">
+    <div class="cover-content">
+      <p class="eyebrow">A birthday message for you</p>
+      <h1 id="coverTitle">That guy says Hi<br>and happy birthday to<br><em>his lovely princess</em></h1>
+      <button class="cover-button" id="continueToPassword" type="button">Continue</button>
+    </div>
+  </section>
+
+  <section class="gate" id="passwordGate" aria-labelledby="gateTitle">
+    <div class="gate-card">
+      <div class="gate-heart" aria-hidden="true">♡</div>
+      <p class="eyebrow">A little surprise, just for you</p>
+      <h1 id="gateTitle">Our secret<br><em>little world</em></h1>
+      <p class="gate-copy">There’s a birthday surprise waiting inside. Enter our special word to open it.</p>
+      <form class="password-form" id="passwordForm">
+        <label for="passwordInput" class="visually-hidden"
+          style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;">Password</label>
+        <input id="passwordInput" type="password" placeholder="Our secret word" autocomplete="off" required>
+        <button class="button" type="submit">Unlock <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="gate-error" id="gateError" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top">for my love ♡</a>
+      <div class="nav-links">
+        <a href="#memories">Memories</a><a href="#video">Our film</a><a href="#letter">A letter</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-content">
+        <p class="eyebrow">To my favorite person</p>
+        <h1 id="heroTitle">Happy<br><em>Birthday, Mama</em></h1>
+        <p class="hero-subtitle">You are the warmth in my life, the strength in my heart, and the beautiful smile that
+          makes everything better.</p>
+        <p class="countdown-label" id="countdownHeading">Celebrating your beautiful day</p>
+        <div class="countdown" role="timer" aria-labelledby="countdownHeading">
+          <div class="time-unit"><strong id="days">00</strong><span>Days</span></div>
+          <div class="time-unit"><strong id="hours">00</strong><span>Hours</span></div>
+          <div class="time-unit"><strong id="minutes">00</strong><span>Minutes</span></div>
+          <div class="time-unit"><strong id="seconds">00</strong><span>Seconds</span></div>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#memories">A few things I adore<span aria-hidden="true">⌄</span></a>
+    </section>
+
+    <section class="section reveal" id="memories">
+      <div class="section-heading">
+        <p class="eyebrow">Little moments, big love</p>
+        <h2 class="serif">My favorite memories</h2>
+        <p>Some of the countless reasons I’m grateful for you.</p>
+      </div>
+      <div class="gallery">
+        <figure class="photo-card"><img src="html/IMG-20260727-WA0006.jpg" alt="A smiling couple in natural light"
+            loading="lazy">
+          <figcaption>My favorite place is beside you.</figcaption>
+        </figure>
+        <figure class="photo-card"><img src="html/IMG-20260923-WA0044.jpg" alt="A loving young couple outdoors"
+            loading="lazy">
+          <figcaption>You make ordinary days glow.</figcaption>
+        </figure>
+        <figure class="photo-card"><img src="html/IMG-20260801-WA0023.jpg" alt="Couple walking together at sunset"
+            loading="lazy">
+          <figcaption>Every sunset is better with you.</figcaption>
+        </figure>
+        <figure class="photo-card"><img src="html/IMG-20260727-WA0012.jpg" alt="Couple embracing at golden hour"
+            loading="lazy">
+          <figcaption>Your laugh is my favorite sound.</figcaption>
+        </figure>
+        <figure class="photo-card"><img src="html/IMG-20260702-WA0050.jpg" alt="Woman smiling brightly with a loved one"
+            loading="lazy">
+          <figcaption>Another lovely day with you.</figcaption>
+        </figure>
+        <figure class="photo-card"><img src="html/IMG-20260627-WA0011.jpg" alt="A romantic portrait of a couple"
+            loading="lazy">
+          <figcaption>Us, always my favorite story.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section reveal" id="video">
+      <div class="section-heading">
+        <p class="eyebrow">A little time capsule</p>
+        <h2 class="serif">Press play, remember us</h2>
+        <p>Add a favorite video clip, a tiny montage, or a birthday greeting.</p>
+      </div>
+      <div class="video-card">
+        <!-- Videos are stored in the local html folder. -->
+        <video controls playsinline preload="metadata"
+          poster="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85"
+          aria-label="A video for your birthday">
+          <source src="html/lv_7678107636776193300_20260926204934.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <div class="video-caption">A little reminder of all the beautiful moments still to come. ♡</div>
+      </div>
+      <div class="video-card">
+        <video controls playsinline preload="metadata"
+          poster="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85"
+          aria-label="A second birthday video">
+          <source src="html/lv_7674383035470581010_20260825205829.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <div class="video-caption">One more little memory to keep close. ♡</div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="letter">
+      <div class="section-heading">
+        <p class="eyebrow">Read this whenever you need a smile</p>
+        <h2 class="serif">A letter for you</h2>
+      </div>
+      <article class="letter-wrap">
+        <!-- Make this message your own: edit the paragraphs and sign-off. -->
+        <div class="letter">
+          <p>My dear Mama,</p>
+          <p>Happy birthday to the most beautiful, strongest, and most loving woman in my life. Your smile brings light
+            into every room, and your heart makes everyone around you feel safe and loved.</p>
+          <p>Thank you for all the love, patience, and care you give without even realizing how much it means. You
+            inspire me with your strength, your kindness, and the way you keep shining through everything.</p>
+          <p>I hope this new year brings you endless joy, peace, laughter, and all the beautiful things you deserve. May
+            your days be filled with love, comfort, and the kind of happiness that makes your heart feel full.</p>
+          <p>Happy birthday, Mama. You are my treasure, my comfort, and my greatest blessing.</p>
+          <p class="signature">With all my love, always ♡</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>Made with <span>♥</span>, just for you.</footer>
+
+  <script>
+    // Change this to your own special word. This is a playful gate, not secure authentication.
+    const SECRET_PASSWORD = "mama";
+
+    const cover = document.getElementById("coverScreen");
+    const continueButton = document.getElementById("continueToPassword");
+    const gate = document.getElementById("passwordGate");
+    const form = document.getElementById("passwordForm");
+    const passwordInput = document.getElementById("passwordInput");
+    const gateError = document.getElementById("gateError");
+
+    continueButton.addEventListener("click", () => {
+      cover.classList.add("is-hidden");
+      passwordInput.focus();
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (passwordInput.value.trim().toLowerCase() === SECRET_PASSWORD.toLowerCase()) {
+        gate.classList.add("is-hidden");
+        document.body.classList.remove("locked");
+        window.setTimeout(() => gate.setAttribute("aria-hidden", "true"), 650);
+        startCountdown();
+      } else {
+        gateError.textContent = "That’s not quite it, love. Try our special word again.";
+        passwordInput.select();
+      }
+    });
+
+    // Counts down to the next October 5 at local midnight; rolls over automatically each year.
+    function getNextBirthday() {
+      const now = new Date();
+      let year = now.getFullYear();
+      let target = new Date(year, 9, 5, 0, 0, 0);
+      if (now >= target) target = new Date(year + 1, 9, 5, 0, 0, 0);
+      return target;
+    }
+
+    let countdownInterval;
+    function startCountdown() {
+      const target = getNextBirthday();
+      const update = () => {
+        const remaining = Math.max(0, target.getTime() - Date.now());
+        const days = Math.floor(remaining / 86400000);
+        const hours = Math.floor((remaining % 86400000) / 3600000);
+        const minutes = Math.floor((remaining % 3600000) / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        document.getElementById("days").textContent = String(days).padStart(2, "0");
+        document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+        document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+        if (remaining <= 0) {
+          document.querySelector(".countdown-label").textContent = "Today is your day — happy birthday!";
+          window.clearInterval(countdownInterval);
+        }
+      };
+      update();
+      countdownInterval = window.setInterval(update, 1000);
+    }
+
+    // Fade sections in as they scroll into view.
+    const sections = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            currentObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      sections.forEach((section) => observer.observe(section));
+    } else {
+      sections.forEach((section) => section.classList.add("visible"));
+    }
+  </script>
+</body>
+
+</html>
