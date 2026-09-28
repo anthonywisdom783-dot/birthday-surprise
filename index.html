@@ -193,6 +193,10 @@
       white-space: pre-wrap;
     }
 
+    .typing-text.is-centered {
+      text-align: center;
+    }
+
     .typing-cursor {
       display: inline-block;
       width: .7ch;
@@ -1161,6 +1165,9 @@
     // Change this to your own special word. This is a playful gate, not secure authentication.
     const SECRET_PASSWORD = "mama";
     const COVER_PASSWORD = "obinna";
+    const REPEAT_SEQUENCE_SECONDS = 10;
+    const COVER_COUNTDOWN_COMPLETED_KEY = "birthdayCoverCountdownCompleted";
+    const COVER_COUNTDOWN_TARGET_KEY = "birthdayCoverCountdownTarget";
 
     const entryGate = document.getElementById("entryGate");
     const countdownOverlay = document.getElementById("countdownOverlay");
@@ -1178,8 +1185,8 @@
     const passwordInput = document.getElementById("passwordInput");
     const gateError = document.getElementById("gateError");
 
-    function startCountdownOverlay() {
-      const target = getNextBirthday();
+    function startSequenceTimer(seconds, onComplete, labelText = "your surprise unlocks in") {
+      const target = new Date(Date.now() + seconds * 1000);
 
       const update = () => {
         const remaining = Math.max(0, target.getTime() - Date.now());
@@ -1187,22 +1194,78 @@
         const days = Math.floor(totalSeconds / 86400);
         const hours = Math.floor((totalSeconds % 86400) / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
+        const secondsLeft = totalSeconds % 60;
 
         document.getElementById("preDays").textContent = String(days).padStart(2, "0");
         document.getElementById("preHours").textContent = String(hours).padStart(2, "0");
         document.getElementById("preMinutes").textContent = String(minutes).padStart(2, "0");
-        document.getElementById("preSeconds").textContent = String(seconds).padStart(2, "0");
+        document.getElementById("preSeconds").textContent = String(secondsLeft).padStart(2, "0");
 
         if (remaining <= 0) {
           window.clearInterval(countdownOverlayInterval);
           countdownOverlay.classList.add("is-hidden");
-          showBirthdayMessage();
+          onComplete();
         }
       };
 
+      const overlayHeading = countdownOverlay.querySelector("h2");
+      if (overlayHeading) overlayHeading.textContent = labelText;
       update();
       countdownOverlayInterval = window.setInterval(update, 1000);
+    }
+
+    function startCountdownOverlay() {
+      if (localStorage.getItem(COVER_COUNTDOWN_COMPLETED_KEY) === "true") {
+        countdownOverlay.classList.add("is-hidden");
+        showBirthdayMessage();
+        return;
+      }
+
+      const storedTarget = Number(localStorage.getItem(COVER_COUNTDOWN_TARGET_KEY));
+      const target = storedTarget > 0 ? storedTarget : getNextBirthday().getTime();
+      localStorage.setItem(COVER_COUNTDOWN_TARGET_KEY, String(target));
+
+      if (Date.now() >= target) {
+        localStorage.setItem(COVER_COUNTDOWN_COMPLETED_KEY, "true");
+        countdownOverlay.classList.add("is-hidden");
+        showBirthdayMessage();
+        return;
+      }
+
+      countdownOverlay.classList.remove("is-hidden");
+      startSequenceTimer((target - Date.now()) / 1000, () => {
+        localStorage.setItem(COVER_COUNTDOWN_COMPLETED_KEY, "true");
+        showBirthdayMessage();
+      });
+    }
+
+    function showRepeatSequence() {
+      countdownOverlay.classList.remove("is-hidden");
+      startSequenceTimer(REPEAT_SEQUENCE_SECONDS, () => {
+        countdownOverlay.classList.add("is-hidden");
+        const message = "Happy Birthday Mama";
+        let index = 0;
+        typingText.textContent = "";
+        typingText.classList.add("is-centered");
+        continueFromMessage.classList.remove("is-visible");
+        messageOverlay.classList.remove("is-hidden");
+
+        const typeInterval = window.setInterval(() => {
+          typingText.innerHTML = message.slice(0, index) + '<span class="typing-cursor">|</span>';
+          index += 1;
+
+          if (index > message.length) {
+            window.clearInterval(typeInterval);
+            typingText.textContent = message;
+            window.setTimeout(() => {
+              messageOverlay.classList.add("is-hidden");
+              typingText.classList.remove("is-centered");
+              coverPasswordGate.classList.remove("is-hidden");
+              coverPasswordInput.focus();
+            }, 1200);
+          }
+        }, 90);
+      }, "see you in");
     }
 
     function showBirthdayMessage() {
@@ -1220,6 +1283,9 @@
           window.clearInterval(typeInterval);
           typingText.innerHTML = message;
           continueFromMessage.classList.add("is-visible");
+          window.setTimeout(() => {
+            continueFromMessage.click();
+          }, 1200);
         }
       }, 90);
     }
@@ -1231,8 +1297,7 @@
       entryGate.classList.add("is-open");
       window.setTimeout(() => {
         entryGate.classList.add("is-hidden");
-        coverPasswordGate.classList.remove("is-hidden");
-        coverPasswordInput.focus();
+        showRepeatSequence();
       }, 1800);
     });
 
@@ -1264,7 +1329,7 @@
         gate.classList.add("is-hidden");
         document.body.classList.remove("locked");
         window.setTimeout(() => gate.setAttribute("aria-hidden", "true"), 650);
-        startCountdown();
+        startMainCountdownFromNow();
       } else {
         gateError.textContent = "That’s not quite it, Mama. Try my special word again.";
         passwordInput.select();
@@ -1298,6 +1363,30 @@
           window.clearInterval(countdownInterval);
         }
       };
+      update();
+      countdownInterval = window.setInterval(update, 1000);
+    }
+
+    function startMainCountdownFromNow() {
+      const target = getNextBirthday();
+      const update = () => {
+        const remaining = Math.max(0, target.getTime() - Date.now());
+        const days = Math.floor(remaining / 86400000);
+        const hours = Math.floor((remaining % 86400000) / 3600000);
+        const minutes = Math.floor((remaining % 3600000) / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+
+        document.getElementById("days").textContent = String(days).padStart(2, "0");
+        document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+        document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+
+        if (remaining <= 0) {
+          document.querySelector(".countdown-label").textContent = "Today is your day — happy birthday!";
+          window.clearInterval(countdownInterval);
+        }
+      };
+
       update();
       countdownInterval = window.setInterval(update, 1000);
     }
