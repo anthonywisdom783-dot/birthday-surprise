@@ -953,37 +953,19 @@
   </div>
 </section>
 
+<section class="countdown-overlay is-hidden" id="countdownOverlay" aria-live="polite" aria-label="Countdown">
+  <div class="countdown-card">
+    <p class="eyebrow" id="countdownLabel">see you in</p>
+    <h2 id="countdownValue">10</h2>
+  </div>
+</section>
+
 <section class="entry-gate" id="entryGate" aria-label="Opening gate">
   <div class="entry-gate__panel entry-gate__panel--left" aria-hidden="true"></div>
   <div class="entry-gate__panel entry-gate__panel--right" aria-hidden="true"></div>
   <div class="entry-gate__message">
     <p class="eyebrow"></p>
     <h2>your surprise awaits you...</h2>
-  </div>
-</section>
-
-<section class="cover-gate" id="coverPasswordGate" aria-labelledby="coverPasswordTitle">
-  <div class="gate-card">
-    <div class="gate-heart" aria-hidden="true">♡</div>
-    <p class="eyebrow">A special key</p>
-    <h1 id="coverPasswordTitle">Enter <br><em>his name</em></h1>
-    <p class="gate-copy">This is the key to the next page.</p>
-    <form class="password-form" id="coverPasswordForm">
-      <label for="coverPasswordInput" class="visually-hidden"
-        style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;">Cover
-        password</label>
-      <input id="coverPasswordInput" type="password" placeholder="enter the code" autocomplete="off" required>
-      <button class="button" type="submit">Open</button>
-    </form>
-    <p class="gate-error" id="coverGateError" role="status" aria-live="polite"></p>
-  </div>
-</section>
-
-<section class="cover is-hidden" id="coverScreen" aria-labelledby="coverTitle">
-  <div class="cover-content">
-    <p class="eyebrow">A message for my princess</p>
-    <h1 id="coverTitle">That guy says hi<br>and happy birthday to<br><em>my little princess </em></h1>
-    <button class="cover-button" id="continueToPassword" type="button">Continue</button>
   </div>
 </section>
 
@@ -1151,7 +1133,6 @@
 <script>
   // Change this to your own special word. This is a playful gate, not secure authentication.
   const SECRET_PASSWORD = "mama";
-  const COVER_PASSWORD = "obinna";
   const REPEAT_SEQUENCE_SECONDS = 10;
 
   const entryGate = document.getElementById("entryGate");
@@ -1159,23 +1140,48 @@
   const messageOverlay = document.getElementById("messageOverlay");
   const typingText = document.getElementById("typingText");
   const continueFromMessage = document.getElementById("continueFromMessage");
-  const coverPasswordGate = document.getElementById("coverPasswordGate");
-  const coverPasswordForm = document.getElementById("coverPasswordForm");
-  const coverPasswordInput = document.getElementById("coverPasswordInput");
-  const coverGateError = document.getElementById("coverGateError");
-  const cover = document.getElementById("coverScreen");
-  const continueButton = document.getElementById("continueToPassword");
   const gate = document.getElementById("passwordGate");
   const form = document.getElementById("passwordForm");
   const passwordInput = document.getElementById("passwordInput");
   const gateError = document.getElementById("gateError");
 
 
-  function showRepeatSequence() {
+  function startSequenceTimer(duration, onComplete, label = "see you in") {
+    if (!countdownOverlay) {
+      onComplete();
+      return;
+    }
+
+    const countdownValue = document.getElementById("countdownValue");
+    const countdownLabel = document.getElementById("countdownLabel");
+
+    if (!countdownValue || !countdownLabel) {
+      onComplete();
+      return;
+    }
+
     countdownOverlay.style.display = "";
     countdownOverlay.classList.remove("is-hidden");
+    countdownLabel.textContent = label;
+
+    let remaining = duration;
+    const tick = () => {
+      countdownValue.textContent = String(remaining);
+      if (remaining <= 0) {
+        window.clearInterval(countdownOverlayInterval);
+        countdownOverlay.classList.add("is-hidden");
+        onComplete();
+        return;
+      }
+      remaining -= 1;
+    };
+
+    tick();
+    countdownOverlayInterval = window.setInterval(tick, 1000);
+  }
+
+  function showRepeatSequence() {
     startSequenceTimer(REPEAT_SEQUENCE_SECONDS, () => {
-      countdownOverlay.classList.add("is-hidden");
       const message = "Happy Birthday Mama";
       let index = 0;
       typingText.textContent = "";
@@ -1193,8 +1199,8 @@
           window.setTimeout(() => {
             messageOverlay.classList.add("is-hidden");
             typingText.classList.remove("is-centered");
-            coverPasswordGate.classList.remove("is-hidden");
-            coverPasswordInput.focus();
+            gate.classList.remove("is-hidden");
+            passwordInput.focus();
           }, 1200);
         }
       }, 90);
@@ -1227,24 +1233,6 @@
     entryGate.classList.add("is-open");
     entryGate.classList.add("is-hidden");
     showRepeatSequence();
-  });
-
-  coverPasswordForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (coverPasswordInput.value.trim().toLowerCase() === COVER_PASSWORD.toLowerCase()) {
-      coverPasswordGate.classList.add("is-hidden");
-      cover.classList.remove("is-hidden");
-      coverPasswordInput.value = "";
-      coverGateError.textContent = "";
-    } else {
-      coverGateError.textContent = "Not quite. Try his name again.";
-      coverPasswordInput.select();
-    }
-  });
-
-  continueButton.addEventListener("click", () => {
-    cover.classList.add("is-hidden");
-    passwordInput.focus();
   });
 
   form.addEventListener("submit", (event) => {
@@ -1342,9 +1330,11 @@
   }
 
   function initializeFirstPageSequence() {
-    countdownOverlay.style.display = "none";
-    countdownOverlay.classList.add("is-hidden");
-    countdownOverlay.setAttribute("aria-hidden", "true");
+    if (countdownOverlay) {
+      countdownOverlay.style.display = "none";
+      countdownOverlay.classList.add("is-hidden");
+      countdownOverlay.setAttribute("aria-hidden", "true");
+    }
     showBirthdayMessage();
   }
 
