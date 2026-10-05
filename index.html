@@ -248,7 +248,7 @@
       background:
         radial-gradient(circle at 50% 35%, rgba(201, 151, 214, .2), transparent 30%),
         linear-gradient(180deg, #120d1f 0%, #1b122a 100%);
-      transition: opacity .9s ease, visibility .9s ease;
+      transition: opacity .2s ease, visibility .2s ease;
     }
 
     .entry-gate::before {
@@ -308,7 +308,7 @@
       text-align: center;
       opacity: 1;
       transform: scale(1);
-      transition: opacity 1s ease, transform 1s ease;
+      transition: opacity .2s ease, transform .2s ease;
     }
 
     .entry-gate.is-open .entry-gate__message {
@@ -1225,10 +1225,8 @@
   continueFromMessage.addEventListener("click", () => {
     messageOverlay.classList.add("is-hidden");
     entryGate.classList.add("is-open");
-    window.setTimeout(() => {
-      entryGate.classList.add("is-hidden");
-      showRepeatSequence();
-    }, 1800);
+    entryGate.classList.add("is-hidden");
+    showRepeatSequence();
   });
 
   coverPasswordForm.addEventListener("submit", (event) => {
