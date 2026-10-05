@@ -944,479 +944,414 @@
   </style>
 </head>
 
-<body class="locked">
-  <section class="countdown-overlay" id="countdownOverlay" aria-live="polite" aria-label="Countdown before access">
-    <div class="countdown-card">
-      <p class="eyebrow">Please wait</p>
-      <h2>your surprise unlocks in</h2>
-      <div class="pre-countdown" role="timer" aria-label="Time until reveal">
-        <div class="time-unit"><strong id="preDays">00</strong><span>Days</span></div>
-        <div class="time-unit"><strong id="preHours">00</strong><span>Hours</span></div>
-        <div class="time-unit"><strong id="preMinutes">00</strong><span>Minutes</span></div>
-        <div class="time-unit"><strong id="preSeconds">00</strong><span>Seconds</span></div>
+
+<section class="message-overlay is-hidden" id="messageOverlay" aria-live="polite" aria-label="Birthday message">
+  <div class="message-card">
+    <p class="eyebrow">For my princess</p>
+    <div class="typing-text" id="typingText" aria-live="polite"></div>
+    <button class="button" id="continueFromMessage" type="button">Continue</button>
+  </div>
+</section>
+
+<section class="entry-gate" id="entryGate" aria-label="Opening gate">
+  <div class="entry-gate__panel entry-gate__panel--left" aria-hidden="true"></div>
+  <div class="entry-gate__panel entry-gate__panel--right" aria-hidden="true"></div>
+  <div class="entry-gate__message">
+    <p class="eyebrow"></p>
+    <h2>your surprise awaits you...</h2>
+  </div>
+</section>
+
+<section class="cover-gate" id="coverPasswordGate" aria-labelledby="coverPasswordTitle">
+  <div class="gate-card">
+    <div class="gate-heart" aria-hidden="true">♡</div>
+    <p class="eyebrow">A special key</p>
+    <h1 id="coverPasswordTitle">Enter <br><em>his name</em></h1>
+    <p class="gate-copy">This is the key to the next page.</p>
+    <form class="password-form" id="coverPasswordForm">
+      <label for="coverPasswordInput" class="visually-hidden"
+        style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;">Cover
+        password</label>
+      <input id="coverPasswordInput" type="password" placeholder="enter the code" autocomplete="off" required>
+      <button class="button" type="submit">Open</button>
+    </form>
+    <p class="gate-error" id="coverGateError" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<section class="cover is-hidden" id="coverScreen" aria-labelledby="coverTitle">
+  <div class="cover-content">
+    <p class="eyebrow">A message for my princess</p>
+    <h1 id="coverTitle">That guy says hi<br>and happy birthday to<br><em>my little princess </em></h1>
+    <button class="cover-button" id="continueToPassword" type="button">Continue</button>
+  </div>
+</section>
+
+<section class="gate" id="passwordGate" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <div class="gate-heart" aria-hidden="true">♡</div>
+    <p class="eyebrow">A little surprise, just for you</p>
+    <h1 id="gateTitle">your little<br><em>Secret world</em></h1>
+    <p class="gate-copy">There’s a surprise waiting inside. Enter that one word ...</p>
+    <form class="password-form" id="passwordForm">
+      <label for="passwordInput" class="visually-hidden"
+        style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;">Password</label>
+      <input id="passwordInput" type="password" placeholder="enter thy name" autocomplete="off" required>
+      <button class="button" type="submit">Unlock <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="gate-error" id="gateError" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="#top">for my Mama ♡</a>
+    <div class="nav-links">
+      <a href="#memories">Memories</a><a href="#video">Our film</a><a href="#letter">A letter</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="hero-content">
+      <p class="eyebrow">To my favorite person</p>
+      <h1 id="heroTitle">Happy<br><em>Birthday, Mama</em></h1>
+      <p class="hero-subtitle">You are the warmth in my life, the strength in my heart, and the beautiful smile that
+        makes every ordinary day feel magical.</p>
+      <p class="countdown-label" id="countdownHeading">Celebrating your beautiful day</p>
+      <div class="countdown" role="timer" aria-labelledby="countdownHeading">
+        <div class="time-unit"><strong id="days">00</strong><span>Days</span></div>
+        <div class="time-unit"><strong id="hours">00</strong><span>Hours</span></div>
+        <div class="time-unit"><strong id="minutes">00</strong><span>Minutes</span></div>
+        <div class="time-unit"><strong id="seconds">00</strong><span>Seconds</span></div>
       </div>
     </div>
+    <a class="scroll-cue" href="#memories">A few things I love about my Mama<span aria-hidden="true">⌄</span></a>
   </section>
 
-  <section class="message-overlay is-hidden" id="messageOverlay" aria-live="polite" aria-label="Birthday message">
-    <div class="message-card">
-      <p class="eyebrow">For my princess</p>
-      <div class="typing-text" id="typingText" aria-live="polite"></div>
-      <button class="button" id="continueFromMessage" type="button">Continue</button>
+  <section class="section reveal" id="memories">
+    <div class="section-heading">
+      <p class="eyebrow">Little moments, big love</p>
+      <h2 class="serif">My favorite memories</h2>
+      <p>Some of the countless reasons I’m grateful for you.</p>
+    </div>
+    <div class="gallery">
+      <figure class="photo-card"><img src="html/IMG-20260727-WA0006.jpg" alt="A smiling couple in natural light"
+          loading="lazy">
+        <figcaption>My favorite place is beside you.</figcaption>
+      </figure>
+      <figure class="photo-card"><img src="html/IMG-20260923-WA0044.jpg" alt="A loving young couple outdoors"
+          loading="lazy">
+        <figcaption>You make ordinary days glow.</figcaption>
+      </figure>
+      <figure class="photo-card"><img src="html/IMG-20260801-WA0023.jpg" alt="Couple walking together at sunset"
+          loading="lazy">
+        <figcaption>Every sunset is better with you.</figcaption>
+      </figure>
+      <figure class="photo-card"><img src="html/IMG-20260725-WA0020.jpg" alt="Couple embracing at golden hour"
+          loading="lazy">
+        <figcaption>Your laugh is my favorite sound.</figcaption>
+      </figure>
+      <figure class="photo-card"><img src="html/IMG-20260702-WA0050.jpg" alt="Woman smiling brightly with a loved one"
+          loading="lazy">
+        <figcaption>Another lovely day with you.</figcaption>
+      </figure>
+      <figure class="photo-card"><img src="html/IMG-20260627-WA0011.jpg" alt="A romantic portrait of a couple"
+          loading="lazy">
+        <figcaption>Us, always my favorite story.</figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="entry-gate" id="entryGate" aria-label="Opening gate">
-    <div class="entry-gate__panel entry-gate__panel--left" aria-hidden="true"></div>
-    <div class="entry-gate__panel entry-gate__panel--right" aria-hidden="true"></div>
-    <div class="entry-gate__message">
-      <p class="eyebrow"></p>
-      <h2>your surprise awaits you...</h2>
+  <section class="section reveal" id="video">
+    <div class="section-heading">
+      <p class="eyebrow">A little time capsule</p>
+      <h2 class="serif">Press play, remember that smile of yours </h2>
+      <p>birthday greeting.</p>
+    </div>
+    <div class="video-card">
+      <!-- Videos are stored in the local html folder. -->
+      <video controls playsinline preload="metadata"
+        poster="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85"
+        aria-label="A video for your birthday">
+        <source src="html/lv_7678107636776193300_20260926204934.mp4" type="video/mp4">
+        Your browser does not support video playback.
+      </video>
+      <div class="video-caption">A little reminder of all the beautiful moments still to come. ♡</div>
+    </div>
+    <div class="video-card">
+      <video controls playsinline preload="metadata"
+        poster="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85"
+        aria-label="A second birthday video">
+        <source src="html/lv_7674383035470581010_20260825205829.mp4" type="video/mp4">
+        Your browser does not support video playback.
+      </video>
+      <div class="video-caption">One more little memory to keep close. ♡</div>
     </div>
   </section>
 
-  <section class="cover-gate" id="coverPasswordGate" aria-labelledby="coverPasswordTitle">
-    <div class="gate-card">
-      <div class="gate-heart" aria-hidden="true">♡</div>
-      <p class="eyebrow">A special key</p>
-      <h1 id="coverPasswordTitle">Enter <br><em>his name</em></h1>
-      <p class="gate-copy">This is the key to the next page.</p>
-      <form class="password-form" id="coverPasswordForm">
-        <label for="coverPasswordInput" class="visually-hidden"
-          style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;">Cover
-          password</label>
-        <input id="coverPasswordInput" type="password" placeholder="enter the code" autocomplete="off" required>
-        <button class="button" type="submit">Open</button>
-      </form>
-      <p class="gate-error" id="coverGateError" role="status" aria-live="polite"></p>
+  <section class="section reveal" id="letter">
+    <div class="section-heading">
+      <p class="eyebrow">Read this whenever you need a smile</p>
+      <h2 class="serif">A letter for you</h2>
     </div>
-  </section>
-
-  <section class="cover is-hidden" id="coverScreen" aria-labelledby="coverTitle">
-    <div class="cover-content">
-      <p class="eyebrow">A message for my princess</p>
-      <h1 id="coverTitle">That guy says hi<br>and happy birthday to<br><em>my little princess </em></h1>
-      <button class="cover-button" id="continueToPassword" type="button">Continue</button>
-    </div>
-  </section>
-
-  <section class="gate" id="passwordGate" aria-labelledby="gateTitle">
-    <div class="gate-card">
-      <div class="gate-heart" aria-hidden="true">♡</div>
-      <p class="eyebrow">A little surprise, just for you</p>
-      <h1 id="gateTitle">your little<br><em>Secret world</em></h1>
-      <p class="gate-copy">There’s a surprise waiting inside. Enter that one word ...</p>
-      <form class="password-form" id="passwordForm">
-        <label for="passwordInput" class="visually-hidden"
-          style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;">Password</label>
-        <input id="passwordInput" type="password" placeholder="enter thy name" autocomplete="off" required>
-        <button class="button" type="submit">Unlock <span aria-hidden="true">→</span></button>
-      </form>
-      <p class="gate-error" id="gateError" role="status" aria-live="polite"></p>
-    </div>
-  </section>
-
-  <header class="site-header">
-    <nav class="nav" aria-label="Main navigation">
-      <a class="brand" href="#top">for my Mama ♡</a>
-      <div class="nav-links">
-        <a href="#memories">Memories</a><a href="#video">Our film</a><a href="#letter">A letter</a>
+    <article class="letter-wrap">
+      <div class="letter">
+        <p>My dear Mama,</p>
+        <p>Happy birthday to the most beautiful, most thoughtful, and most precious person in my world. Your smile has
+          a
+          way of making everything softer, brighter, and better. Being with you feels like home in the most beautiful
+          way.</p>
+        <p>Thank you for all the love, patience, kindness, and light you bring into my life. You make my days richer,
+          my heart fuller, and my dreams feel possible. I am so grateful for your presence and for every moment we
+          share.</p>
+        <p>I hope this new year brings you endless peace, laughter, joy, and the kind of happiness that makes your
+          soul
+          feel full. May every day ahead be wrapped in love, comfort, and beautiful memories that stay with you
+          forever.</p>
+        <p>Happy birthday, my love. You are my greatest blessing, my favorite person, and the one I will always
+          choose.</p>
+        <p class="signature">With all my love, always ♡</p>
       </div>
-    </nav>
-  </header>
+    </article>
+  </section>
 
-  <main id="top">
-    <section class="hero" aria-labelledby="heroTitle">
-      <div class="hero-content">
-        <p class="eyebrow">To my favorite person</p>
-        <h1 id="heroTitle">Happy<br><em>Birthday, Mama</em></h1>
-        <p class="hero-subtitle">You are the warmth in my life, the strength in my heart, and the beautiful smile that
-          makes every ordinary day feel magical.</p>
-        <p class="countdown-label" id="countdownHeading">Celebrating your beautiful day</p>
-        <div class="countdown" role="timer" aria-labelledby="countdownHeading">
-          <div class="time-unit"><strong id="days">00</strong><span>Days</span></div>
-          <div class="time-unit"><strong id="hours">00</strong><span>Hours</span></div>
-          <div class="time-unit"><strong id="minutes">00</strong><span>Minutes</span></div>
-          <div class="time-unit"><strong id="seconds">00</strong><span>Seconds</span></div>
+  <section class="section reveal" id="love-rate">
+    <div class="section-heading">
+      <p class="eyebrow">A little honesty</p>
+      <h2 class="serif">How much do you love ...?</h2>
+    </div>
+
+    <div class="love-rating">
+      <div class="rating-score"><strong id="lovePercent">0</strong><span>%</span></div>
+      <input class="rating-scale" id="loveRange" type="range" min="0" max="100" value="0"
+        aria-label="How much do you love me percentage">
+
+      <div class="reason-grid">
+        <div class="reason-field">
+          <label for="reasonOne">Reason 1</label>
+          <input id="reasonOne" type="text" placeholder="Type your first reason" aria-label="First reason">
+        </div>
+        <div class="reason-field">
+          <label for="reasonTwo">Reason 2</label>
+          <input id="reasonTwo" type="text" placeholder="Type your second reason" aria-label="Second reason">
+        </div>
+        <div class="reason-field">
+          <label for="reasonThree">Reason 3</label>
+          <input id="reasonThree" type="text" placeholder="Type your third reason" aria-label="Third reason">
         </div>
       </div>
-      <a class="scroll-cue" href="#memories">A few things I love about my Mama<span aria-hidden="true">⌄</span></a>
-    </section>
+    </div>
+  </section>
+</main>
 
-    <section class="section reveal" id="memories">
-      <div class="section-heading">
-        <p class="eyebrow">Little moments, big love</p>
-        <h2 class="serif">My favorite memories</h2>
-        <p>Some of the countless reasons I’m grateful for you.</p>
-      </div>
-      <div class="gallery">
-        <figure class="photo-card"><img src="html/IMG-20260727-WA0006.jpg" alt="A smiling couple in natural light"
-            loading="lazy">
-          <figcaption>My favorite place is beside you.</figcaption>
-        </figure>
-        <figure class="photo-card"><img src="html/IMG-20260923-WA0044.jpg" alt="A loving young couple outdoors"
-            loading="lazy">
-          <figcaption>You make ordinary days glow.</figcaption>
-        </figure>
-        <figure class="photo-card"><img src="html/IMG-20260801-WA0023.jpg" alt="Couple walking together at sunset"
-            loading="lazy">
-          <figcaption>Every sunset is better with you.</figcaption>
-        </figure>
-        <figure class="photo-card"><img src="html/IMG-20260725-WA0020.jpg" alt="Couple embracing at golden hour"
-            loading="lazy">
-          <figcaption>Your laugh is my favorite sound.</figcaption>
-        </figure>
-        <figure class="photo-card"><img src="html/IMG-20260702-WA0050.jpg" alt="Woman smiling brightly with a loved one"
-            loading="lazy">
-          <figcaption>Another lovely day with you.</figcaption>
-        </figure>
-        <figure class="photo-card"><img src="html/IMG-20260627-WA0011.jpg" alt="A romantic portrait of a couple"
-            loading="lazy">
-          <figcaption>Us, always my favorite story.</figcaption>
-        </figure>
-      </div>
-    </section>
+<footer>Made with <span>♥</span>, just for you.</footer>
 
-    <section class="section reveal" id="video">
-      <div class="section-heading">
-        <p class="eyebrow">A little time capsule</p>
-        <h2 class="serif">Press play, remember that smile of yours </h2>
-        <p>birthday greeting.</p>
-      </div>
-      <div class="video-card">
-        <!-- Videos are stored in the local html folder. -->
-        <video controls playsinline preload="metadata"
-          poster="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85"
-          aria-label="A video for your birthday">
-          <source src="html/lv_7678107636776193300_20260926204934.mp4" type="video/mp4">
-          Your browser does not support video playback.
-        </video>
-        <div class="video-caption">A little reminder of all the beautiful moments still to come. ♡</div>
-      </div>
-      <div class="video-card">
-        <video controls playsinline preload="metadata"
-          poster="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85"
-          aria-label="A second birthday video">
-          <source src="html/lv_7674383035470581010_20260825205829.mp4" type="video/mp4">
-          Your browser does not support video playback.
-        </video>
-        <div class="video-caption">One more little memory to keep close. ♡</div>
-      </div>
-    </section>
+<script>
+  // Change this to your own special word. This is a playful gate, not secure authentication.
+  const SECRET_PASSWORD = "mama";
+  const COVER_PASSWORD = "obinna";
+  const REPEAT_SEQUENCE_SECONDS = 10;
 
-    <section class="section reveal" id="letter">
-      <div class="section-heading">
-        <p class="eyebrow">Read this whenever you need a smile</p>
-        <h2 class="serif">A letter for you</h2>
-      </div>
-      <article class="letter-wrap">
-        <div class="letter">
-          <p>My dear Mama,</p>
-          <p>Happy birthday to the most beautiful, most thoughtful, and most precious person in my world. Your smile has
-            a
-            way of making everything softer, brighter, and better. Being with you feels like home in the most beautiful
-            way.</p>
-          <p>Thank you for all the love, patience, kindness, and light you bring into my life. You make my days richer,
-            my heart fuller, and my dreams feel possible. I am so grateful for your presence and for every moment we
-            share.</p>
-          <p>I hope this new year brings you endless peace, laughter, joy, and the kind of happiness that makes your
-            soul
-            feel full. May every day ahead be wrapped in love, comfort, and beautiful memories that stay with you
-            forever.</p>
-          <p>Happy birthday, my love. You are my greatest blessing, my favorite person, and the one I will always
-            choose.</p>
-          <p class="signature">With all my love, always ♡</p>
-        </div>
-      </article>
-    </section>
+  const entryGate = document.getElementById("entryGate");
+  const countdownOverlay = document.getElementById("countdownOverlay");
+  const messageOverlay = document.getElementById("messageOverlay");
+  const typingText = document.getElementById("typingText");
+  const continueFromMessage = document.getElementById("continueFromMessage");
+  const coverPasswordGate = document.getElementById("coverPasswordGate");
+  const coverPasswordForm = document.getElementById("coverPasswordForm");
+  const coverPasswordInput = document.getElementById("coverPasswordInput");
+  const coverGateError = document.getElementById("coverGateError");
+  const cover = document.getElementById("coverScreen");
+  const continueButton = document.getElementById("continueToPassword");
+  const gate = document.getElementById("passwordGate");
+  const form = document.getElementById("passwordForm");
+  const passwordInput = document.getElementById("passwordInput");
+  const gateError = document.getElementById("gateError");
 
-    <section class="section reveal" id="love-rate">
-      <div class="section-heading">
-        <p class="eyebrow">A little honesty</p>
-        <h2 class="serif">How much do you love me?</h2>
-      </div>
 
-      <div class="love-rating">
-        <div class="rating-score"><strong id="lovePercent">0</strong><span>%</span></div>
-        <input class="rating-scale" id="loveRange" type="range" min="0" max="100" value="0"
-          aria-label="How much do you love me percentage">
-
-        <div class="reason-grid">
-          <div class="reason-field">
-            <label for="reasonOne">Reason 1</label>
-            <input id="reasonOne" type="text" placeholder="Type your first reason" aria-label="First reason">
-          </div>
-          <div class="reason-field">
-            <label for="reasonTwo">Reason 2</label>
-            <input id="reasonTwo" type="text" placeholder="Type your second reason" aria-label="Second reason">
-          </div>
-          <div class="reason-field">
-            <label for="reasonThree">Reason 3</label>
-            <input id="reasonThree" type="text" placeholder="Type your third reason" aria-label="Third reason">
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>Made with <span>♥</span>, just for you.</footer>
-
-  <script>
-    // Change this to your own special word. This is a playful gate, not secure authentication.
-    const SECRET_PASSWORD = "mama";
-    const COVER_PASSWORD = "obinna";
-    const REPEAT_SEQUENCE_SECONDS = 10;
-    const COVER_COUNTDOWN_COMPLETED_KEY = "birthdayCoverCountdownCompleted";
-    const COVER_COUNTDOWN_TARGET_KEY = "birthdayCoverCountdownTarget";
-
-    const entryGate = document.getElementById("entryGate");
-    const countdownOverlay = document.getElementById("countdownOverlay");
-    const messageOverlay = document.getElementById("messageOverlay");
-    const typingText = document.getElementById("typingText");
-    const continueFromMessage = document.getElementById("continueFromMessage");
-    const coverPasswordGate = document.getElementById("coverPasswordGate");
-    const coverPasswordForm = document.getElementById("coverPasswordForm");
-    const coverPasswordInput = document.getElementById("coverPasswordInput");
-    const coverGateError = document.getElementById("coverGateError");
-    const cover = document.getElementById("coverScreen");
-    const continueButton = document.getElementById("continueToPassword");
-    const gate = document.getElementById("passwordGate");
-    const form = document.getElementById("passwordForm");
-    const passwordInput = document.getElementById("passwordInput");
-    const gateError = document.getElementById("gateError");
-
-    function startSequenceTimer(seconds, onComplete, labelText = "your surprise unlocks in") {
-      const target = new Date(Date.now() + seconds * 1000);
-
-      const update = () => {
-        const remaining = Math.max(0, target.getTime() - Date.now());
-        const totalSeconds = Math.floor(remaining / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const secondsLeft = totalSeconds % 60;
-
-        document.getElementById("preDays").textContent = String(days).padStart(2, "0");
-        document.getElementById("preHours").textContent = String(hours).padStart(2, "0");
-        document.getElementById("preMinutes").textContent = String(minutes).padStart(2, "0");
-        document.getElementById("preSeconds").textContent = String(secondsLeft).padStart(2, "0");
-
-        if (remaining <= 0) {
-          window.clearInterval(countdownOverlayInterval);
-          countdownOverlay.classList.add("is-hidden");
-          onComplete();
-        }
-      };
-
-      const overlayHeading = countdownOverlay.querySelector("h2");
-      if (overlayHeading) overlayHeading.textContent = labelText;
-      update();
-      countdownOverlayInterval = window.setInterval(update, 1000);
-    }
-
-    function startCountdownOverlay() {
-      if (localStorage.getItem(COVER_COUNTDOWN_COMPLETED_KEY) === "true") {
-        countdownOverlay.classList.add("is-hidden");
-        showBirthdayMessage();
-        return;
-      }
-
-      const storedTarget = Number(localStorage.getItem(COVER_COUNTDOWN_TARGET_KEY));
-      const target = storedTarget > 0 ? storedTarget : getNextBirthday().getTime();
-      localStorage.setItem(COVER_COUNTDOWN_TARGET_KEY, String(target));
-
-      if (Date.now() >= target) {
-        localStorage.setItem(COVER_COUNTDOWN_COMPLETED_KEY, "true");
-        countdownOverlay.classList.add("is-hidden");
-        showBirthdayMessage();
-        return;
-      }
-
-      countdownOverlay.classList.remove("is-hidden");
-      startSequenceTimer((target - Date.now()) / 1000, () => {
-        localStorage.setItem(COVER_COUNTDOWN_COMPLETED_KEY, "true");
-        showBirthdayMessage();
-      });
-    }
-
-    function showRepeatSequence() {
-      countdownOverlay.classList.remove("is-hidden");
-      startSequenceTimer(REPEAT_SEQUENCE_SECONDS, () => {
-        countdownOverlay.classList.add("is-hidden");
-        const message = "Happy Birthday Mama";
-        let index = 0;
-        typingText.textContent = "";
-        typingText.classList.add("is-centered");
-        continueFromMessage.classList.remove("is-visible");
-        messageOverlay.classList.remove("is-hidden");
-
-        const typeInterval = window.setInterval(() => {
-          typingText.innerHTML = message.slice(0, index) + '<span class="typing-cursor">|</span>';
-          index += 1;
-
-          if (index > message.length) {
-            window.clearInterval(typeInterval);
-            typingText.textContent = message;
-            window.setTimeout(() => {
-              messageOverlay.classList.add("is-hidden");
-              typingText.classList.remove("is-centered");
-              coverPasswordGate.classList.remove("is-hidden");
-              coverPasswordInput.focus();
-            }, 1200);
-          }
-        }, 90);
-      }, "see you in");
-    }
-
-    function showBirthdayMessage() {
-      messageOverlay.classList.remove("is-hidden");
-      typingText.innerHTML = "";
-      continueFromMessage.classList.remove("is-visible");
-
-      const message = "My princess, you made it this far. I would love to congratulate you on your patience towards this, and use this time to wish you happy birthday and tell you how much I love you. I love you.";
+  function showRepeatSequence() {
+    countdownOverlay.style.display = "";
+    countdownOverlay.classList.remove("is-hidden");
+    startSequenceTimer(REPEAT_SEQUENCE_SECONDS, () => {
+      countdownOverlay.classList.add("is-hidden");
+      const message = "Happy Birthday Mama";
       let index = 0;
+      typingText.textContent = "";
+      typingText.classList.add("is-centered");
+      continueFromMessage.classList.remove("is-visible");
+      messageOverlay.classList.remove("is-hidden");
+
       const typeInterval = window.setInterval(() => {
         typingText.innerHTML = message.slice(0, index) + '<span class="typing-cursor">|</span>';
         index += 1;
 
         if (index > message.length) {
           window.clearInterval(typeInterval);
-          typingText.innerHTML = message;
-          continueFromMessage.classList.add("is-visible");
+          typingText.textContent = message;
           window.setTimeout(() => {
-            continueFromMessage.click();
+            messageOverlay.classList.add("is-hidden");
+            typingText.classList.remove("is-centered");
+            coverPasswordGate.classList.remove("is-hidden");
+            coverPasswordInput.focus();
           }, 1200);
         }
       }, 90);
-    }
+    }, "see you in");
+  }
 
-    let countdownOverlayInterval;
+  function showBirthdayMessage() {
+    messageOverlay.classList.remove("is-hidden");
+    typingText.innerHTML = "";
+    continueFromMessage.classList.remove("is-visible");
 
-    continueFromMessage.addEventListener("click", () => {
-      messageOverlay.classList.add("is-hidden");
-      entryGate.classList.add("is-open");
-      window.setTimeout(() => {
-        entryGate.classList.add("is-hidden");
-        showRepeatSequence();
-      }, 1800);
-    });
+    const message = "My princess, you made it this far. I would love to congratulate you on your patience towards this, and use this time to wish you happy birthday and tell you how much I love you. I love you.";
+    let index = 0;
+    const typeInterval = window.setInterval(() => {
+      typingText.innerHTML = message.slice(0, index) + '<span class="typing-cursor">|</span>';
+      index += 1;
 
-    window.addEventListener("load", () => {
-      startCountdownOverlay();
-    });
-
-    coverPasswordForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (coverPasswordInput.value.trim().toLowerCase() === COVER_PASSWORD.toLowerCase()) {
-        coverPasswordGate.classList.add("is-hidden");
-        cover.classList.remove("is-hidden");
-        coverPasswordInput.value = "";
-        coverGateError.textContent = "";
-      } else {
-        coverGateError.textContent = "Not quite. Try his name again.";
-        coverPasswordInput.select();
+      if (index > message.length) {
+        window.clearInterval(typeInterval);
+        typingText.innerHTML = message;
+        continueFromMessage.classList.add("is-visible");
       }
-    });
+    }, 90);
+  }
 
-    continueButton.addEventListener("click", () => {
-      cover.classList.add("is-hidden");
-      passwordInput.focus();
-    });
+  let countdownOverlayInterval;
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (passwordInput.value.trim().toLowerCase() === SECRET_PASSWORD.toLowerCase()) {
-        gate.classList.add("is-hidden");
-        document.body.classList.remove("locked");
-        window.setTimeout(() => gate.setAttribute("aria-hidden", "true"), 650);
-        startMainCountdownFromNow();
-      } else {
-        gateError.textContent = "That’s not quite it, Mama. Try my special word again.";
-        passwordInput.select();
-      }
-    });
+  continueFromMessage.addEventListener("click", () => {
+    messageOverlay.classList.add("is-hidden");
+    entryGate.classList.add("is-open");
+    window.setTimeout(() => {
+      entryGate.classList.add("is-hidden");
+      showRepeatSequence();
+    }, 1800);
+  });
 
-    // Counts down to the next October 5 at local midnight; rolls over automatically each year.
-    function getNextBirthday() {
-      const now = new Date();
-      let year = now.getFullYear();
-      let target = new Date(year, 9, 5, 0, 0, 0);
-      if (now >= target) target = new Date(year + 1, 9, 5, 0, 0, 0);
-      return target;
-    }
-
-    let countdownInterval;
-    function startCountdown() {
-      const target = getNextBirthday();
-      const update = () => {
-        const remaining = Math.max(0, target.getTime() - Date.now());
-        const days = Math.floor(remaining / 86400000);
-        const hours = Math.floor((remaining % 86400000) / 3600000);
-        const minutes = Math.floor((remaining % 3600000) / 60000);
-        const seconds = Math.floor((remaining % 60000) / 1000);
-        document.getElementById("days").textContent = String(days).padStart(2, "0");
-        document.getElementById("hours").textContent = String(hours).padStart(2, "0");
-        document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
-        document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
-        if (remaining <= 0) {
-          document.querySelector(".countdown-label").textContent = "Today is your day — happy birthday!";
-          window.clearInterval(countdownInterval);
-        }
-      };
-      update();
-      countdownInterval = window.setInterval(update, 1000);
-    }
-
-    function startMainCountdownFromNow() {
-      const target = getNextBirthday();
-      const update = () => {
-        const remaining = Math.max(0, target.getTime() - Date.now());
-        const days = Math.floor(remaining / 86400000);
-        const hours = Math.floor((remaining % 86400000) / 3600000);
-        const minutes = Math.floor((remaining % 3600000) / 60000);
-        const seconds = Math.floor((remaining % 60000) / 1000);
-
-        document.getElementById("days").textContent = String(days).padStart(2, "0");
-        document.getElementById("hours").textContent = String(hours).padStart(2, "0");
-        document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
-        document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
-
-        if (remaining <= 0) {
-          document.querySelector(".countdown-label").textContent = "Today is your day — happy birthday!";
-          window.clearInterval(countdownInterval);
-        }
-      };
-
-      update();
-      countdownInterval = window.setInterval(update, 1000);
-    }
-
-    // Fade sections in as they scroll into view.
-    const sections = document.querySelectorAll(".reveal");
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries, currentObserver) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            currentObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      sections.forEach((section) => observer.observe(section));
+  coverPasswordForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (coverPasswordInput.value.trim().toLowerCase() === COVER_PASSWORD.toLowerCase()) {
+      coverPasswordGate.classList.add("is-hidden");
+      cover.classList.remove("is-hidden");
+      coverPasswordInput.value = "";
+      coverGateError.textContent = "";
     } else {
-      sections.forEach((section) => section.classList.add("visible"));
+      coverGateError.textContent = "Not quite. Try his name again.";
+      coverPasswordInput.select();
     }
+  });
 
-    const loveRange = document.getElementById("loveRange");
-    const lovePercent = document.getElementById("lovePercent");
+  continueButton.addEventListener("click", () => {
+    cover.classList.add("is-hidden");
+    passwordInput.focus();
+  });
 
-    if (loveRange && lovePercent) {
-      const updateLoveRange = () => {
-        lovePercent.textContent = loveRange.value;
-      };
-      loveRange.addEventListener("input", updateLoveRange);
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (passwordInput.value.trim().toLowerCase() === SECRET_PASSWORD.toLowerCase()) {
+      gate.classList.add("is-hidden");
+      document.body.classList.remove("locked");
+      window.setTimeout(() => gate.setAttribute("aria-hidden", "true"), 650);
+      startMainCountdownFromNow();
+    } else {
+      gateError.textContent = "That’s not quite it, Mama. Try my special word again.";
+      passwordInput.select();
     }
-  </script>
+  });
+
+  // Counts down to the next October 5 at local midnight; rolls over automatically each year.
+  function getNextBirthday() {
+    const now = new Date();
+    let year = now.getFullYear();
+    let target = new Date(year, 9, 5, 0, 0, 0);
+    if (now >= target) target = new Date(year + 1, 9, 5, 0, 0, 0);
+    return target;
+  }
+
+  let countdownInterval;
+  function startCountdown() {
+    const target = getNextBirthday();
+    const update = () => {
+      const remaining = Math.max(0, target.getTime() - Date.now());
+      const days = Math.floor(remaining / 86400000);
+      const hours = Math.floor((remaining % 86400000) / 3600000);
+      const minutes = Math.floor((remaining % 3600000) / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+      document.getElementById("days").textContent = String(days).padStart(2, "0");
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+      if (remaining <= 0) {
+        document.querySelector(".countdown-label").textContent = "Today is your day — happy birthday!";
+        window.clearInterval(countdownInterval);
+      }
+    };
+    update();
+    countdownInterval = window.setInterval(update, 1000);
+  }
+
+  function startMainCountdownFromNow() {
+    const target = getNextBirthday();
+    const update = () => {
+      const remaining = Math.max(0, target.getTime() - Date.now());
+      const days = Math.floor(remaining / 86400000);
+      const hours = Math.floor((remaining % 86400000) / 3600000);
+      const minutes = Math.floor((remaining % 3600000) / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+
+      document.getElementById("days").textContent = String(days).padStart(2, "0");
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+
+      if (remaining <= 0) {
+        document.querySelector(".countdown-label").textContent = "Today is your day — happy birthday!";
+        window.clearInterval(countdownInterval);
+      }
+    };
+
+    update();
+    countdownInterval = window.setInterval(update, 1000);
+  }
+
+  // Fade sections in as they scroll into view.
+  const sections = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries, currentObserver) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          currentObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    sections.forEach((section) => observer.observe(section));
+  } else {
+    sections.forEach((section) => section.classList.add("visible"));
+  }
+
+  const loveRange = document.getElementById("loveRange");
+  const lovePercent = document.getElementById("lovePercent");
+
+  if (loveRange && lovePercent) {
+    const updateLoveRange = () => {
+      lovePercent.textContent = loveRange.value;
+    };
+    loveRange.addEventListener("input", updateLoveRange);
+  }
+
+  function initializeFirstPageSequence() {
+    countdownOverlay.style.display = "none";
+    countdownOverlay.classList.add("is-hidden");
+    countdownOverlay.setAttribute("aria-hidden", "true");
+    showBirthdayMessage();
+  }
+
+  initializeFirstPageSequence();
+</script>
 </body>
 
 </html>
